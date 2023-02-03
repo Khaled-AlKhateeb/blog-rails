@@ -1,4 +1,4 @@
-reuiqre 'rails_helper'
+require 'rails_helper'
 
 RSpec.describe Like, type: :model do
   user = User.create(name: 'author')

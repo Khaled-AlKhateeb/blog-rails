@@ -1,7 +1,7 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Khaled') }
+  subject { User.new(name: 'Adel') }
   before { subject.save }
 
   context 'When testing validations' do
@@ -14,12 +14,12 @@ RSpec.describe User, type: :model do
       expect(subject).to be_valid
     end
 
-    it 'User is not valid with a negative posts_counter' do
+    it 'User is a not valid with a negative posts_counter' do
       subject.posts_counter = -10
       expect(subject).to_not be_valid
     end
 
-    it 'User is valid with a positiove posts_counter' do
+    it 'User is valid with a positive posts_counter' do
       expect(subject).to be_valid
     end
   end

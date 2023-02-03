@@ -53,7 +53,7 @@ RSpec.describe Post, type: :model do
   end
 
   context 'When testing recent_five_comments' do
-    before { 10.times { Comment.create(post: subject, author: user, text: 'Hi Khaled!') } }
+    before { 10.times { Comment.create(post: subject, author: user, text: 'Hi Tom!') } }
 
     it 'recent_five_comments should return array of length 5' do
       expect(subject.recent_five_comments.length).to eq 5
