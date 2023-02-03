@@ -13,7 +13,7 @@ RSpec.describe Post, type: :model do
     end
 
     it 'for title should be valid with a valid value' do
-      expect(subject)to be_valid
+      expect(subject).to be_valid
     end
 
     it 'for title should be valid for not exceeding 250 characters' do
