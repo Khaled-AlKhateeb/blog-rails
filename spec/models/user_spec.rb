@@ -1,34 +1,35 @@
 require 'rails_helper'
 
 RSpec.describe User, type: :model do
-  subject { User.new(name: 'Adel') }
-  before { subject.save }
-
-  context 'When testing validations' do
-    it 'User is not valid without a name' do
-      subject.name = nil
-      expect(subject).to_not be_valid
-    end
-
-    it 'User is a valid with a name' do
-      expect(subject).to be_valid
-    end
-
-    it 'User is a not valid with a negative posts_counter' do
-      subject.posts_counter = -10
-      expect(subject).to_not be_valid
-    end
-
-    it 'User is valid with a positive posts_counter' do
-      expect(subject).to be_valid
-    end
+  let(:user) do
+    User.new(
+      name: 'Tom',
+      photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
+      bio: 'Teacher from Mexico.',
+      post_counter: 3
+    )
   end
 
-  context 'When testing behavior' do
-    before { 5.times { Post.create(author: subject, title: 'Hello', text: 'This is my first post') } }
+  before { subject.save }
 
-    it 'lists the most 3 recent posts' do
-      expect(subject.recent_three_posts.length).to eq 3
-    end
+  it 'The name should be present' do
+    user.name = nil
+
+    expect(user).to_not be_valid
+  end
+
+  it 'PostsCounter must be an integer greater than or equal to zero.' do
+    user.post_counter = nil
+    expect(user).to_not be_valid
+  end
+
+  it 'PostsCounter must not be a string' do
+    user.post_counter = 'Hello World'
+    expect(user).to_not be_valid
+  end
+
+  it 'PostsCounter must not be positive' do
+    user.post_counter = -1
+    expect(user).to_not be_valid
   end
 end
