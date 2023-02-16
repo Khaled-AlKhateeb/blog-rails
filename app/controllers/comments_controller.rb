@@ -5,6 +5,7 @@ class CommentsController < ApplicationController
       redirect_to user_post_path(current_user, @comment.post_id) if @comment.save
     end
   end
+
   def destroy
     Comment.delete(params[:id])
     redirect_to user_post_path(params[:user_id], params[:post_id])

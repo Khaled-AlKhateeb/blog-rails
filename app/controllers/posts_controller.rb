@@ -35,5 +35,4 @@ class PostsController < ApplicationController
     Comment.delete(params[:id])
     redirect_to user_post_path(params[:user_id], params[:post_id])
   end
-
 end
