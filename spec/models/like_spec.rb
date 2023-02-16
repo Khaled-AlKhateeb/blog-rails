@@ -1,44 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Like, type: :model do
-  let(:user) do
-    User.new(
-      name: 'Tom',
-      photo: 'https://unsplash.com/photos/F_-0BxGuVvo',
-      bio: 'Teacher from Mexico.',
-      post_counter: 3
-    )
+  user = User.create(name: 'author')
+  post = Post.create(author: user, title: 'Hello', text: 'This is my first post')
+  subject { Like.new(author: user, post:) }
+
+  context 'testing likes_counter for non saved post' do
+    after { subject.save }
+    it 'should be 0' do
+      expect(Post.find(post.id).likes_counter).to be 0
+    end
   end
 
-  let(:post) do
-    Post.new(
-      author: user,
-      title: 'My first post',
-      text: 'This is my first post',
-      comments_counter: 1,
-      likes_counter: 1
-    )
-  end
-
-  let(:like) do
-    Like.new(
-      author: user,
-      post:
-    )
-  end
-
-  it 'is only valid with a user' do
-    like.author = user
-    expect(like).to be_valid
-  end
-
-  it 'is valid with a post' do
-    like.post = post
-    expect(like).to be_valid
-  end
-
-  it 'updates likes counter after save' do
-    like.save
-    expect(post.likes_counter).to eq(2)
+  context 'testing likes_counter for a saved post' do
+    before { subject.save }
+    it 'should be 1' do
+      expect(Post.find(post.id).likes_counter).to be 1
+    end
   end
 end

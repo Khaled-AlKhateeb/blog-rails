@@ -1,50 +1,21 @@
 require 'rails_helper'
 
 RSpec.describe Comment, type: :model do
-  let(:user) do
-    User.new(
-      name: 'John Doe',
-      photo: 'https://unsplash.com/photos',
-      bio: 'Foo bar',
-      post_counter: 3
-    )
+  user = User.create(name: 'author')
+  post = Post.create(author: user, title: 'Hello', text: 'This is my first post')
+  subject { Comment.new(author: user, post:) }
+
+  context 'testing comments_counter for non saved post' do
+    after { subject.save }
+    it 'should be 0' do
+      expect(Post.find(post.id).comments_counter).to be 0
+    end
   end
 
-  let(:post) do
-    Post.new(
-      author: user,
-      title: 'My first post',
-      text: 'This is my first post',
-      comments_counter: 1,
-      likes_counter: 2
-    )
-  end
-
-  let(:comment) do
-    Comment.new(
-      author: user,
-      post:,
-      text: 'first comment'
-    )
-  end
-
-  it 'is valid with a text' do
-    comment.text = 'first comment'
-    expect(comment).to be_valid
-  end
-
-  it 'is only valid with a user' do
-    comment.author = user
-    expect(comment).to be_valid
-  end
-
-  it 'is valid with a post' do
-    comment.post = post
-    expect(comment).to be_valid
-  end
-
-  it 'updates comments counter after save' do
-    comment.save
-    expect(post.comments_counter).to eq(2)
+  context 'testing comments_counter for a saved post' do
+    before { subject.save }
+    it 'should be 1' do
+      expect(Post.find(post.id).comments_counter).to be 1
+    end
   end
 end

@@ -1,8 +1,8 @@
 require 'rails_helper'
 
-RSpec.describe 'User', type: :request do
-  describe 'GET /user' do
-    before(:example) { get '/user' }
+RSpec.describe 'Users', type: :request do
+  describe 'GET /users' do
+    before(:example) { get '/users' }
 
     it 'returns http success' do
       expect(response).to have_http_status(:success)
@@ -17,10 +17,10 @@ RSpec.describe 'User', type: :request do
     end
   end
 
-  describe 'GET /user/:id' do
-    before(:example) { get '/user/12' }
+  describe 'GET /users/:id' do
+    before(:example) { get '/users/12' }
 
-    it 'return http success' do
+    it 'returns http success' do
       expect(response).to have_http_status(:success)
     end
 
