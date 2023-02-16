@@ -2,10 +2,7 @@ require 'rails_helper'
 
 RSpec.describe 'Posts', type: :request do
   describe 'GET /users/:id/posts' do
-    before(:example) do
-      @user = User.create(id: 12, name: 'John')
-      get '/users/12/posts'
-    end
+    before(:example) { get '/users/12/posts' }
 
     it 'returns http success' do
       expect(response).to have_http_status(:success)
