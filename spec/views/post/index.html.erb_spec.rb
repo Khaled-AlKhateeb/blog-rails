@@ -1,7 +1,9 @@
 require 'rails_helper'
+
 RSpec.describe 'post/index.html.erb', type: :system do
   subject { User.new(name: 'test', photo: 'http://google.com', bio: 'Programmer') }
   before { subject.save }
+
   describe 'index page' do
     it 'shows the right content' do
       Post.create(author: subject, title: 'Hello00', text: 'This is my first post')
@@ -14,6 +16,7 @@ RSpec.describe 'post/index.html.erb', type: :system do
       Comment.create(text: 'Hello3', author_id: subject.id, post_id: post.id)
       Comment.create(text: 'Hello4', author_id: subject.id, post_id: post.id)
       Comment.create(text: 'Hello5', author_id: subject.id, post_id: post.id)
+
       visit user_posts_path(subject)
       expect(page).to have_xpath("//img[@src = 'http://google.com' and @alt='test photo']")
       expect(page).to have_content('test')
@@ -26,6 +29,7 @@ RSpec.describe 'post/index.html.erb', type: :system do
       expect(page).to have_content('Hello3')
       expect(page).to have_content('Comments: 6')
       expect(page).to have_content('Likes: 0')
+
       click_link('Hello20')
       sleep(5)
       expect(page).to have_current_path(user_post_path(subject, post))
