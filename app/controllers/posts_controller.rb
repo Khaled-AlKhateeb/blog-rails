@@ -32,7 +32,7 @@ class PostsController < ApplicationController
   end
 
   def destroy
-    Comment.delete(params[:id])
-    redirect_to user_post_path(params[:user_id], params[:post_id])
+    Post.delete(params[:id])
+    redirect_to user_posts_path(params[:user_id])
   end
 end
